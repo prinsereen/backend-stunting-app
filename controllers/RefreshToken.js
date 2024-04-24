@@ -1,11 +1,11 @@
 import jwt from "jsonwebtoken";
-import Student from "../models/StudentModel.js";
+import Dokter from "../models/DokterModel.js";
 
 export const refreshToken = async(req, res) => {
     try {
         const refreshToken = req.cookies.refreshToken;
         if(!refreshToken) return res.sendStatus(401);
-        const user = await Student.findOne({
+        const user = await Dokter.findOne({
             where:{
                 refresh_token: refreshToken
             }
@@ -14,12 +14,11 @@ export const refreshToken = async(req, res) => {
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
             if(err) return res.sendStatus(403);
 
-            const id = user.student_id;
-            const name = user.student_name;
-            const email = user.student_email;
-            const nisn = user.student_nisn;
+            const id = user.id;
+            const str = user.str;
+            const username = user.username;
 
-        const accessToken = jwt.sign({id, name, email, nisn}, process.env.ACCESS_TOKEN_SECRET, {
+        const accessToken = jwt.sign({id, str, username}, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: '1d'
         });
             res.json({accessToken})

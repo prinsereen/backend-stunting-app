@@ -1,11 +1,17 @@
 import express from "express"
 import db from "./config/Database.js";
-import Student from "./models/StudentModel.js";
+import Dokter from "./models/DokterModel.js";
+import TipeTes from "./models/DataMasterTipeTes.js";
+import KelompokUsia from "./models/DataMasterKelompokUsia.js";
+import Kuesioner from "./models/DataMasterKuesioner.js";
+import SoalItem from "./models/DataMasterSoalItem.js";
+import Pasien from "./models/PasienModel.js";
+import Result from "./models/ResultModel.js";
+import Transaction from "./models/TransactionModel.js";
 import bodyParser from "body-parser";
 import AuthRoute from "./routes/AuthRoute.js"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
-import StudentRoute from "./routes/StudentRoute.js"
 
 dotenv.config();
 
@@ -14,7 +20,7 @@ const app = express();
 try {
     await db.authenticate();
     console.log("Database Connected ...")
-    //await db.sync()
+    await db.sync()
 } catch (error) {
     console.log(error)
 }
@@ -25,6 +31,6 @@ app.use(bodyParser.json());
 app.use(cookieParser())
 app.use(express.json())
 app.use(AuthRoute)
-app.use(StudentRoute)
+//app.use(StudentRoute)
 
 app.listen(5000, ()=> console.log("server running on port 5000"))

@@ -14,11 +14,9 @@ export const verifyToken = (req, res, next) => {
         }
         console.log(decoded)
         req.user = {
-            student_nisn: decoded.nisn,
-            student_id: decoded.id,
-            student_email: decoded.email,
-            student_name: decoded.name,
-            // Add other user properties as needed
+            id: decoded.id,
+            str: decoded.str,
+            username: decoded.username,
         };
         console.log(req.user)
         next();
