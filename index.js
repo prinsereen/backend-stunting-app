@@ -10,6 +10,7 @@ import Result from "./models/ResultModel.js";
 import Transaction from "./models/TransactionModel.js";
 import bodyParser from "body-parser";
 import AuthRoute from "./routes/AuthRoute.js"
+import PasienRoute from "./routes/PasienRoute.js"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
 
@@ -20,7 +21,7 @@ const app = express();
 try {
     await db.authenticate();
     console.log("Database Connected ...")
-    await db.sync()
+    //await db.sync()
 } catch (error) {
     console.log(error)
 }
@@ -31,6 +32,7 @@ app.use(bodyParser.json());
 app.use(cookieParser())
 app.use(express.json())
 app.use(AuthRoute)
+app.use(PasienRoute)
 //app.use(StudentRoute)
 
 app.listen(5000, ()=> console.log("server running on port 5000"))
