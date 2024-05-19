@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import Dokter from "../models/DokterModel.js";
+import Parent from "../models/ParentModel.js";
 
 export const refreshToken = async(req, res) => {
     try {
@@ -19,6 +20,32 @@ export const refreshToken = async(req, res) => {
             const username = user.username;
 
         const accessToken = jwt.sign({id, str, username}, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn: '1d'
+        });
+            res.json({accessToken})
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const refreshTokenParent = async(req, res) => {
+    try {
+        const refreshToken = req.cookies.refreshToken;
+        if(!refreshToken) return res.sendStatus(401);
+        const user = await Parent.findOne({
+            where:{
+                refresh_token: refreshToken
+            }
+        });
+        if(!user) return res.sendStatus(403);
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET_PARENT, (err, decoded) => {
+            if(err) return res.sendStatus(403);
+
+            const id = user.id;
+            const username = user.username;
+
+        const accessToken = jwt.sign({id, username}, process.env.ACCESS_TOKEN_SECRET_PARENT, {
             expiresIn: '1d'
         });
             res.json({accessToken})

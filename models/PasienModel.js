@@ -4,6 +4,13 @@ import db from "../config/Database.js";
 const {DataTypes} = Sequelize;
 
 const Pasien = db.define('pasiens', {
+    nik:{
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+        }
+    },   
     nama:{
         type: DataTypes.STRING,
         allowNull: false,

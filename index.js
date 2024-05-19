@@ -8,8 +8,11 @@ import SoalItem from "./models/DataMasterSoalItem.js";
 import Pasien from "./models/PasienModel.js";
 import Result from "./models/ResultModel.js";
 import Transaction from "./models/TransactionModel.js";
+import Parent from "./models/ParentModel.js";
+import ParentPatient from "./models/ParentPatientModel.js";
 import bodyParser from "body-parser";
 import AuthRoute from "./routes/AuthRoute.js"
+import AuhtParent from "./routes/AuthParent.js"
 import PasienRoute from "./routes/PasienRoute.js"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
@@ -33,6 +36,6 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(AuthRoute)
 app.use(PasienRoute)
-//app.use(StudentRoute)
+app.use(AuhtParent)
 
 app.listen(5000, ()=> console.log("server running on port 5000"))

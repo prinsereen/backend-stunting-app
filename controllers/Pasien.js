@@ -14,16 +14,25 @@ export const getAllPatients = async (req, res) => {
 // Create a new patient
 export const createPatient = async (req, res) => {
     try {
-        const { nama, alamat, tanggal_lahir, nama_ayah, nama_ibu, jenis_kelamin } = req.body;
-        const newPatient = await Pasien.create({
-            nama,
-            alamat,
-            tanggal_lahir,
-            nama_ayah,
-            nama_ibu,
-            jenis_kelamin
+        const { nik, nama, alamat, tanggal_lahir, nama_ayah, nama_ibu, jenis_kelamin } = req.body;
+        const pasien = await Pasien.findOne({
+            where: {
+                nik
+            }
         })
-        return success(res, "Berhasil membuat pasien baru", newPatient);
+        if (!pasien){
+            const newPatient = await Pasien.create({
+                nik,
+                nama,
+                alamat,
+                tanggal_lahir,
+                nama_ayah,
+                nama_ibu,
+                jenis_kelamin
+            })
+            return success(res, "Berhasil membuat pasien baru", newPatient);
+        }
+        return error(res, "sudah terdaftar", {})
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
@@ -38,14 +47,15 @@ export const updatePatient = async (req, res) => {
         if (!updatedPatient) {
             return res.status(404).json({ msg: "Pasien tidak ditemukan" });
         }
-        updatedPatient.nama = nama;
-        updatedPatient.alamat = alamat;
-        updatedPatient.tanggal_lahir = tanggal_lahir;
-        updatedPatient.nama_ayah = nama_ayah;
-        updatedPatient.nama_ibu = nama_ibu;
-        updatedPatient.jenis_kelamin = jenis_kelamin;
-        await updatedPatient.save();
-        return success(res, "Berhasil memperbarui data pasien", updatedPatient);
+        const updatePatient = await updatedPatient.update({
+            nama,
+            alamat,
+            tanggal_lahir,
+            nama_ayah,
+            nama_ibu,
+            jenis_kelamin
+        })
+        return success(res, "Berhasil memperbarui data pasien", updatePatient);
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
