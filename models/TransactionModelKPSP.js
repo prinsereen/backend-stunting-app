@@ -2,10 +2,11 @@ import {Sequelize} from "sequelize";
 import db from "../config/Database.js";
 import Pasien from "./PasienModel.js";
 import Kuesioner from "./DataMasterKuesioner.js";
+import SoalItem from "./DataMasterSoalItem.js";
 
 const {DataTypes} = Sequelize;
 
-const Transaction = db.define('transaction', {
+const TransactionKPSP = db.define('transaction_kpsp', {
     pasien_id:{
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -20,6 +21,13 @@ const Transaction = db.define('transaction', {
             notEmpty: true,
         }
     },
+    soal_item_id:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+        }
+    },
     attempt:{
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -27,8 +35,8 @@ const Transaction = db.define('transaction', {
             notEmpty: true,
         }
     },
-    jawaban:{
-        type: DataTypes.STRING,
+    value:{
+        type: DataTypes.ENUM("Y", "N"),
         allowNull: false,
         validate: {
             notEmpty: true,
@@ -38,7 +46,8 @@ const Transaction = db.define('transaction', {
     freezeTableName: true
 })
 
-Transaction.belongsTo(Pasien, {foreignKey: 'pasien_id'})
-Transaction.belongsTo(Kuesioner, {foreignKey: 'kuesioner_id'})
+TransactionKPSP.belongsTo(Pasien, {foreignKey: 'pasien_id'})
+TransactionKPSP.belongsTo(Kuesioner, {foreignKey: 'kuesioner_id'})
+TransactionKPSP.belongsTo(SoalItem, {foreignKey: 'soal_item_id'})
 
-export default Transaction;
+export default TransactionKPSP;

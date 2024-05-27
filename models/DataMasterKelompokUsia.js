@@ -5,7 +5,7 @@ const {DataTypes} = Sequelize;
 
 const KelompokUsia = db.define('master_kelompok_usia', {
     usia:{
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
             notEmpty: true,

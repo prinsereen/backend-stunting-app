@@ -26,14 +26,7 @@ const Result = db.define('results', {
         validate: {
             notEmpty: true,
         }
-    },
-    hasil:{
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
-    },
+    }
 }, {
     freezeTableName: true
 })
