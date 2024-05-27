@@ -51,10 +51,7 @@ const TransactionPertumbuhan = db.define('transaction_pertumbuhan', {
     },
     hasil_WFL:{
         type: DataTypes.STRING,
-    },
-    hasil_KPSP:{
-        type: DataTypes.STRING,
-    },
+    }
 }, {
     freezeTableName: true
 })

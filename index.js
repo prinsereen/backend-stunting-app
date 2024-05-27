@@ -14,7 +14,7 @@ import bodyParser from "body-parser";
 import AuthRoute from "./routes/AuthRoute.js";
 import AuhtParent from "./routes/AuthParent.js";
 import PasienRoute from "./routes/PasienRoute.js";
-import KpspRoute from "./routes/KpspRoute.js"
+import KpspRoute from "./routes/EvaluationRoute.js"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
 
