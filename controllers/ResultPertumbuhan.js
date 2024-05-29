@@ -184,6 +184,7 @@ export const calculatePertumbuhan = async(req, res) => {
                 panjang: panjang,
                 berat_badan: berat_badan,
                 lingkar_kepala: lingkar_kepala,
+                umur: usiaPembulatan,
                 hasil_BMI: mappingBmi(panjang, berat_badan, usiaPembulatan, jenis_kelamin),
                 hasil_HCFA: mappingHcfa(usiaPembulatan, lingkar_kepala, jenis_kelamin),
                 hasil_LFA: mappingLfa(panjang, usiaPembulatan, jenis_kelamin),

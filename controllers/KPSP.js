@@ -56,17 +56,18 @@ export const getKuesioner = async(req, res) => {
         const { tanggal_lahir } = pasien;
 
         const usiaPembulatan = hitungUsiaDalamBulan(tanggal_lahir);
-        const rangeId = await getRangeID(usiaPembulatan);
-        const KuesionerId = await Kuesioner.findOne({
-            where:{
-                kelompok_usia_id: rangeId[0].id
-            }
+
+        const isAnswering = await KelompokUsia.findOne({
+            where:{usia: usiaPembulatan}
         })
+
+        if (!isAnswering){return success(res, "Tidak Berhak Menjawab", [])}
         
         const kpspQuestion = await SoalItem.findAll({
             where:{
-                kuesioner_id: KuesionerId.dataValues.id
-            }
+                kuesioner_id: isAnswering.dataValues.id
+            },
+            attributes:["id", "pertanyaan", "foto_url"]
         })
         
         return success(res, "Berhasil mendapatkan soal", kpspQuestion)

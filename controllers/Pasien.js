@@ -4,12 +4,31 @@ import {success, error} from "../lib/Responser.js"
 // Get all patients
 export const getAllPatients = async (req, res) => {
     try {
-        const patients = await Pasien.findAll();
+        const patients = await Pasien.findAll({
+            attributes:["id","nama", "alamat"]
+        });
         return success(res, "Berhasil mendapatkan data semua pasien", patients);
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
 }
+
+// Get a patient by ID
+export const getPatientById = async (req, res) => {
+    try {
+        const { id } = req.params; // Patient ID
+        const patient = await Pasien.findByPk(id, {
+            attributes: ["nik", "nama", "alamat", "tanggal_lahir", "nama_ayah", "nama_ibu", "jenis_kelamin"]
+        });
+        if (!patient) {
+            return res.status(404).json({ msg: "Pasien tidak ditemukan" });
+        }
+        return success(res, "Berhasil mendapatkan data pasien", patient);
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+}
+
 
 // Create a new patient
 export const createPatient = async (req, res) => {

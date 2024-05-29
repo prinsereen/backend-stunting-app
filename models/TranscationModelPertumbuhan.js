@@ -20,27 +20,30 @@ const TransactionPertumbuhan = db.define('transaction_pertumbuhan', {
         }
     },
     panjang:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
         validate: {
             notEmpty: true,
         }
     },
     berat_badan:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
         validate: {
             notEmpty: true,
         }
     },
     lingkar_kepala:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
         validate: {
             notEmpty: true,
         }
     },
     hasil_BMI:{
+        type: DataTypes.STRING,
+    },
+    umur:{
         type: DataTypes.STRING,
     },
     hasil_HCFA:{
@@ -50,6 +53,9 @@ const TransactionPertumbuhan = db.define('transaction_pertumbuhan', {
         type: DataTypes.STRING,
     },
     hasil_WFL:{
+        type: DataTypes.STRING,
+    },
+    hasil_KPSP:{
         type: DataTypes.STRING,
     }
 }, {
