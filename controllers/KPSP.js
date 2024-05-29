@@ -1,9 +1,11 @@
+import { where } from "sequelize";
 import {success, error} from "../lib/Responser.js"
 import KelompokUsia from "../models/DataMasterKelompokUsia.js";
 import Kuesioner from "../models/DataMasterKuesioner.js";
 import SoalItem from "../models/DataMasterSoalItem.js";
 import Pasien from "../models/PasienModel.js";
 import TransactionKPSP from "../models/TransactionModelKPSP.js";
+import TransactionPertumbuhan from "../models/TranscationModelPertumbuhan.js";
 
 function hitungUsiaDalamBulan(tanggalLahir) {
     const sekarang = new Date();
@@ -145,18 +147,32 @@ export const resultKPSP = async(req, res) => {
                 attempt: usiaPembulatan,
             }
         })
-        if (!allSoal.length != 10){
+        if (allSoal.length != 10){
             return error(res, "Anda belum menjawab semua pertanyaan")
         }
 
         const allSoalFormated = allSoal.map(item => item.dataValues.value);
         const nilai = allSoalFormated.filter(item => item == 'Y')
 
+        let hasil;
         if ((nilai.length) < 6) {
-            return success(res, "Penyimpangan")
+            hasil = "Penyimpangan"
         }else if (nilai.length < 8) {
-            return success(res, "Meragukan")
-        }else return success(res, "Sesuai Umur")
+            hasil = "Meragukan"
+        }else hasil = "Sesuai Umur"
+
+        const patient = await TransactionPertumbuhan.findOne({
+            where:{
+                attempt: usiaPembulatan,
+                umur: usiaPembulatan,
+                pasien_id: req.body.id,
+            }
+        })
+        const pushKpsp = await patient.update({
+            hasil_KPSP: hasil
+        })
+
+        return success(res, "berhasil", pushKpsp)
 
     } catch (error) {
         res.status(500).json({ msg: error.message });

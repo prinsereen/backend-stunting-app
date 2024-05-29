@@ -198,3 +198,36 @@ export const calculatePertumbuhan = async(req, res) => {
         res.status(500).json({ msg: error.message });
     }
 }
+
+
+export const getAllResult = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const pasien = await Pasien.findOne({
+            where: { id },
+            attributes: ['nama', 'alamat', 'nik', 'tanggal_lahir', 'jenis_kelamin']
+        });
+        const { tanggal_lahir, jenis_kelamin } = pasien;
+        pasien.dataValues.tanggal_lahir = tanggal_lahir.toDateString();
+        const usiaPembulatan = hitungUsiaDalamBulan(tanggal_lahir)
+        pasien.dataValues.umur = usiaPembulatan;
+        pasien.jenis_kelamin = jenis_kelamin === 'L' ? 'Laki - Laki' : 'Perempuan';
+
+        const allResult = await TransactionPertumbuhan.findAll({
+            where:{pasien_id:id},
+            attributes:['umur', 'hasil_BMI', 'hasil_HCFA', 'hasil_WFL', 'hasil_KPSP', 'hasil_LFA'],
+            order: [['umur', 'ASC']]
+        })
+        const result_table = allResult.map(item => item.dataValues)
+        const response = {pasien, result_table}
+
+        return success(res, "Anda sudah menjawabnya di bulan ini", response);
+
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+};
+
+
+
