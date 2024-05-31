@@ -147,7 +147,7 @@ export const resultKPSP = async(req, res) => {
                 attempt: usiaPembulatan,
             }
         })
-        if (allSoal.length != 10){
+        if (allSoal.length < 9){
             return error(res, "Anda belum menjawab semua pertanyaan")
         }
 
