@@ -1,5 +1,7 @@
 import Pasien from "../models/PasienModel.js";
 import {success, error} from "../lib/Responser.js"
+import TransactionPertumbuhan from "../models/TranscationModelPertumbuhan.js";
+import TransactionKPSP from "../models/TransactionModelKPSP.js"
 
 // Get all patients
 export const getAllPatients = async (req, res) => {
@@ -88,6 +90,21 @@ export const deletePatient = async (req, res) => {
         if (!deletedPatient) {
             return res.status(404).json({ msg: "Pasien tidak ditemukan" });
         }
+
+        // Delete related records in transaction_pertumbuhan
+        await TransactionPertumbuhan.destroy({
+            where: {
+                pasien_id: id
+            }
+        });
+
+        await TransactionKPSP.destroy({
+            where: {
+                pasien_id: id
+            }
+        });
+
+        // Delete the patient
         await deletedPatient.destroy();
         return success(res, "Berhasil menghapus data pasien");
     } catch (error) {

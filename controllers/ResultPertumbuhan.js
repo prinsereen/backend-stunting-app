@@ -199,6 +199,16 @@ export const calculatePertumbuhan = async(req, res) => {
     }
 }
 
+const showFormattedDate = (date) => {
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    return new Date(date).toLocaleDateString('id-ID', options);
+  };
+
 
 export const getAllResult = async (req, res) => {
     try {
@@ -209,7 +219,7 @@ export const getAllResult = async (req, res) => {
             attributes: ['nama', 'alamat', 'nik', 'tanggal_lahir', 'jenis_kelamin']
         });
         const { tanggal_lahir, jenis_kelamin } = pasien;
-        pasien.dataValues.tanggal_lahir = tanggal_lahir.toDateString();
+        pasien.dataValues.tanggal_lahir = showFormattedDate(tanggal_lahir);
         const usiaPembulatan = hitungUsiaDalamBulan(tanggal_lahir)
         pasien.dataValues.umur = usiaPembulatan;
         pasien.jenis_kelamin = jenis_kelamin === 'L' ? 'Laki - Laki' : 'Perempuan';
