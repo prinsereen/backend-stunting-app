@@ -39,7 +39,19 @@ const Pasien = db.define('pasiens', {
     nama_ibu:{
         type: DataTypes.STRING,
         allowNull: true
-    },   
+    },
+    no_hp:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    rt:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    rw:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     jenis_kelamin:{
         type: DataTypes.ENUM("L", "P"),
         allowNull: false,

@@ -199,7 +199,7 @@ export const calculatePertumbuhan = async(req, res) => {
     }
 }
 
-const showFormattedDate = (date) => {
+export const showFormattedDate = (date) => {
     const options = {
       weekday: 'long',
       year: 'numeric',

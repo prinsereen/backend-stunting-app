@@ -1,4 +1,3 @@
-import { where } from "sequelize";
 import {success, error} from "../lib/Responser.js"
 import KelompokUsia from "../models/DataMasterKelompokUsia.js";
 import Kuesioner from "../models/DataMasterKuesioner.js";
@@ -7,7 +6,7 @@ import Pasien from "../models/PasienModel.js";
 import TransactionKPSP from "../models/TransactionModelKPSP.js";
 import TransactionPertumbuhan from "../models/TranscationModelPertumbuhan.js";
 
-function hitungUsiaDalamBulan(tanggalLahir) {
+export function hitungUsiaDalamBulan(tanggalLahir) {
     const sekarang = new Date();
     const tahunLahir = tanggalLahir.getFullYear();
     const bulanLahir = tanggalLahir.getMonth();

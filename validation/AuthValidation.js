@@ -2,7 +2,6 @@ import { check, validationResult } from "express-validator";
 import Dokter from "../models/DokterModel.js";
 
 export const Register = [
-    check('str').isLength({ min: 1 }).withMessage('tidak boleh kosong'),
     check('password').isLength({ min: 1 }).withMessage('tidak boleh kosong'),
     check('username').isLength({ min: 1 }).withMessage('tidak boleh kosong')
     .custom(async (username, { req }) => {

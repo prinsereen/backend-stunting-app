@@ -20,7 +20,7 @@ export const getPatientById = async (req, res) => {
     try {
         const { id } = req.params; // Patient ID
         const patient = await Pasien.findByPk(id, {
-            attributes: ["nik", "nama", "alamat", "tanggal_lahir", "nama_ayah", "nama_ibu", "jenis_kelamin"]
+            attributes: ["nik", "nama", "alamat", "tanggal_lahir", "nama_ayah", "nama_ibu", "jenis_kelamin", "no_hp", "rt", "rw"]
         });
         if (!patient) {
             return res.status(404).json({ msg: "Pasien tidak ditemukan" });
@@ -35,7 +35,7 @@ export const getPatientById = async (req, res) => {
 // Create a new patient
 export const createPatient = async (req, res) => {
     try {
-        const { nik, nama, alamat, tanggal_lahir, nama_ayah, nama_ibu, jenis_kelamin } = req.body;
+        const { nik, nama, alamat, tanggal_lahir, nama_ayah, nama_ibu, jenis_kelamin, no_hp, rt, rw } = req.body;
         const pasien = await Pasien.findOne({
             where: {
                 nik
@@ -49,7 +49,10 @@ export const createPatient = async (req, res) => {
                 tanggal_lahir,
                 nama_ayah,
                 nama_ibu,
-                jenis_kelamin
+                jenis_kelamin,
+                no_hp,
+                rt,
+                rw
             })
             return success(res, "Berhasil membuat pasien baru", newPatient);
         }

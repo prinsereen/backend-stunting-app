@@ -6,10 +6,7 @@ const {DataTypes} = Sequelize;
 const Dokter = db.define('dokters', {
     str:{
         type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
+        allowNull: true
     },
     username:{
         type: DataTypes.STRING,
