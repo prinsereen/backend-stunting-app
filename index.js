@@ -44,4 +44,9 @@ app.use(PasienRoute);
 app.use(AuhtParent);
 app.use(KpspRoute);
 
-app.listen(5000, () => console.log("server running on port 5000"));
+const port = process.env.PORT || 3000;
+
+// Listen on `port` and 0.0.0.0
+app.listen(port, "0.0.0.0", function () {
+  console.log("server running on port", port)
+});
