@@ -106,11 +106,11 @@ function mappingHcfa(age, hc, gender){
         zScore = getZScoreHeadForAge(age, hc, dataHCFAgirl05)
     }
     if (zScore < -2){
-        return "Makrosefali"
+        return "Tidak Normal"
     }else if (zScore < 2){
         return "Normal"
     }else {
-        return "Makrosefali"
+        return "Tidak Normal"
     }
 }
 
