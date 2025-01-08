@@ -1,6 +1,6 @@
 import Dokter from "../models/DokterModel.js";
 import {success, error} from "../lib/Responser.js"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import jwt  from "jsonwebtoken";
 import { check, validationResult } from "express-validator";
 
